@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -5,20 +7,22 @@ void main() {
   runApp(PerguntaApp());
 }
 
-class PerguntaApp extends StatelessWidget {
-  final List<String> perguntas = [
-    'Qual sua cor preferida?',
-    'Qual seu animal preferido?',
-  ];
+class PerguntaAppState extends State<PerguntaApp> {
+  var perguntaSelecionada = 0;
 
   void responder() {
-    print('Pergunta respondida!');
+    setState(() {
+      perguntaSelecionada++;
+    });
   }
-
-  PerguntaApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<String> perguntas = [
+      'Qual sua cor preferida?',
+      'Qual seu animal preferido?',
+    ];
+
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
@@ -26,21 +30,30 @@ class PerguntaApp extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Text(perguntas[0]),
-          const ElevatedButton(
-            onPressed: perguntas(),
+          Text(perguntas[perguntaSelecionada]),
+          ElevatedButton(
+            onPressed: responder,
             child: Text('Resposta 1'),
           ),
-          const ElevatedButton(
-            onPressed: perguntas(),
+          ElevatedButton(
+            onPressed: responder,
             child: Text('Resposta 2'),
           ),
-          const ElevatedButton(
-            onPressed: perguntas(),
+          ElevatedButton(
+            onPressed: responder,
             child: Text('Resposta 3'),
           ),
         ],
       ),
     ));
+  }
+}
+
+class PerguntaApp extends StatefulWidget {
+  const PerguntaApp({super.key});
+
+  @override
+  PerguntaAppState createState() {
+    return PerguntaAppState();
   }
 }
